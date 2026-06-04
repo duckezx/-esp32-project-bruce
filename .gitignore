@@ -1,0 +1,38 @@
+# PlatformIO
+.pio/
+.pioenvs/
+.piolibdeps/
+.platformio/
+build/
+dist/
+*.bin
+*.elf
+*.map
+
+# IDE
+.vscode/
+.idea/
+*.code-workspace
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+
+# Build
+*.o
+*.a
+*.so
+*.out
+*.elf.map
+
+# Firmware release
+release/
