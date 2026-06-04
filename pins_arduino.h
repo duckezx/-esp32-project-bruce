@@ -1,114 +1,79 @@
-#ifndef PINS_ARDUINO_H_
-#define PINS_ARDUINO_H_
+; Configuração de pinos para ESP32 com Display OLED SSD1306
+; Baseado no Bruce Devices Official Firmware
+; Para: ESP32-WROOM / ESP32-DevKit
 
-#define DEVICE_NAME "ESP32-WROOM SSD1306"
-
-// ============================================================================
-// DISPLAY - SSD1306 I2C OLED (128x64)
-// ============================================================================
-#define HAS_SCREEN 1
-#define USE_LOVYANGFX 1
-
-#define LOVYAN_PANEL Panel_SSD1306
-#define LOVYAN_BUS Bus_I2C
-#define LOVYAN_I2C_BUS 1
-
-#define TFT_I2C_PORT 0
-#define TFT_I2C_WRITE 400000
-#define TFT_I2C_READ 400000
-#define TFT_SDA 21
-#define TFT_SCL 22
-#define TFT_ADDR 0x3C
-
-#define TFT_WIDTH 128
-#define TFT_HEIGHT 64
-#define ROTATION 0
+#ifndef PINS_ARDUINO_H
+#define PINS_ARDUINO_H
 
 // ============================================================================
-// BUTTONS - 5-Key Analog Keyboard Module on D34 (ADC1_6)
+// DISPLAY OLED SSD1306 CONFIGURATION
 // ============================================================================
-#define HAS_BTN 1
-#define BTN_PIN D34  // ADC input for analog keyboard (GPIO 34)
-#define BTN_ACT LOW // Active low for analog buttons
-#define ANALOG_BTN_ENABLED 1
 
-// Analog threshold values for 5-button keyboard (ADC 0-4095)
-// Adjust these based on your specific keyboard module
-#define BTN_DOWN_THRESHOLD 100      // Button 1 - DOWN (0-200mV ~ 0-200)
-#define BTN_SELECT_THRESHOLD 650    // Button 2 - SELECT (600-700mV ~ 600-700)
-#define BTN_UP_THRESHOLD 1300       // Button 3 - UP (1200-1400mV ~ 1200-1400)
-#define BTN_BACK_THRESHOLD 1950     // Button 4 - BACK (1900-2000mV ~ 1900-2000)
-#define BTN_OK_THRESHOLD 2550       // Button 5 - OK/ENTER (2500-2600mV ~ 2500-2600)
-
-// ADC Hysteresis (deadzone to avoid bouncing)
-#define BTN_HYSTERESIS 100
+// I2C Communication (OLED Display)
+#define I2C_SDA     21      // GPIO 21 - I2C Data Line
+#define I2C_SCL     22      // GPIO 22 - I2C Clock Line
+#define I2C_ADDR    0x3C    // SSD1306 I2C Address (0x3C or 0x3D)
 
 // ============================================================================
-// GROVE I2C PINS
+// BUTTON CONFIGURATION
 // ============================================================================
-#define GROVE_SDA 21
-#define GROVE_SCL 22
+
+#define BTN_PIN     0       // GPIO 0 - Boot Button
+#define BTN_ACT     LOW     // Active Low
+#define BTN_ALIAS   "Boot"
 
 // ============================================================================
-// LED and BUZZER
+// LED CONFIGURATION (Optional)
 // ============================================================================
-#define LED -1
-#define BUZZ_PIN -1
+
+#define LED_PIN     -1      // Not used
+#define LED_ON      HIGH
 
 // ============================================================================
-// IR MODULE (optional)
+// IR (INFRARED) CONFIGURATION
 // ============================================================================
-#define IR_TX_PINS '{{"GPIO14",14},{"GPIO15",15},{"GPIO16",16},{"GPIO17",17},{"GPIO18",18},{"GPIO19",19}}'
-#define IR_RX_PINS '{{"GPIO35",35},{"GPIO36",36},{"GPIO39",39},{"GPIO4",4},{"GPIO14",14},{"GPIO15",15}}'
-#define TXLED -1
-#define RXLED -1
+
+#define IR_TX_PIN   12      // GPIO 12 - IR Transmitter
+#define IR_RX_PIN   14      // GPIO 14 - IR Receiver
+#define TXLED       12
+#define RXLED       14
 
 // ============================================================================
-// RF MODULE (optional)
+// RF (RADIO FREQUENCY) CONFIGURATION - Optional
 // ============================================================================
-#define RF_TX_PINS '{{"GPIO14",14},{"GPIO15",15},{"GPIO16",16},{"GPIO17",17},{"GPIO18",18},{"GPIO19",19}}'
-#define RF_RX_PINS '{{"GPIO35",35},{"GPIO36",36},{"GPIO39",39},{"GPIO4",4},{"GPIO14",14},{"GPIO15",15}}'
+
+#define RF_TX_PIN   5       // GPIO 5 - RF Transmitter
+#define RF_RX_PIN   4       // GPIO 4 - RF Receiver
 
 // ============================================================================
-// CC1101 SPI (optional)
+// SPI CONFIGURATION (for RF modules, SD card, etc)
 // ============================================================================
-#define CC1101_GDO0_PIN 2
-#define CC1101_SS_PIN 5
-#define CC1101_MOSI_PIN 23
-#define CC1101_SCK_PIN 18
-#define CC1101_MISO_PIN 19
+
+#define SPI_SCK_PIN     18  // GPIO 18 - Serial Clock
+#define SPI_MOSI_PIN    23  // GPIO 23 - Master Out Slave In
+#define SPI_MISO_PIN    19  // GPIO 19 - Master In Slave Out
+#define SPI_SS_PIN      5   // GPIO 5  - Slave Select
 
 // ============================================================================
-// NRF24 SPI (optional)
+// POWER AND ANALOG CONFIGURATION
 // ============================================================================
-#define NRF24_CE_PIN 4
-#define NRF24_SS_PIN 5
-#define NRF24_MOSI_PIN 23
-#define NRF24_SCK_PIN 18
-#define NRF24_MISO_PIN 19
+
+#define BAT_PIN     -1      // ADC pin for battery (if available)
+#define POWER_PIN   -1      // Power control pin
 
 // ============================================================================
-// STANDARD SPI
+// AUDIO CONFIGURATION (Optional)
 // ============================================================================
-#define SPI_SCK_PIN 18
-#define SPI_MOSI_PIN 23
-#define SPI_MISO_PIN 19
-#define SPI_SS_PIN 5
+
+#define SPEAKER_PIN -1      // Not used in basic setup
+#define MIC_PIN     -1      // Not used in basic setup
 
 // ============================================================================
-// SERIAL/UART
+// DISPLAY RESOLUTION
 // ============================================================================
-#define SERIAL_TX 1
-#define SERIAL_RX 3
-#define GPS_SERIAL_TX SERIAL_TX
-#define GPS_SERIAL_RX SERIAL_RX
 
-// ============================================================================
-// SD CARD (optional)
-// ============================================================================
-#define SDCARD_CS 5
-#define SDCARD_SCK SPI_SCK_PIN
-#define SDCARD_MISO SPI_MISO_PIN
-#define SDCARD_MOSI SPI_MOSI_PIN
+#define SCREEN_WIDTH    128
+#define SCREEN_HEIGHT   64
+#define ROTATION        0   // 0=Portrait, 1=90°, 2=180°, 3=270°
 
-#endif // PINS_ARDUINO_H_
+#endif // PINS_ARDUINO_H
